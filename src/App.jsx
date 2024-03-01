@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import Search from './component/Search'
+import FoodList from './component/FoodList';
+import Nav from './component/Nav';
+import "./App.css"
 
 
 function App() {
@@ -8,12 +11,12 @@ function App() {
 
   return (
     <div className="App">
-      
+
+        <Nav/>
+         
         <Search foodData={foodData} setFoodData={setFoodData} />
 
-        {foodData.map((food)=>(
-            <p>{food.title}</p>
-        ))}
+        <FoodList foodData={foodData} />
     </div>
   )
 }
