@@ -1,0 +1,295 @@
+Getting started with React app
+1. download and install node js
+
+2. create a folder on your desktop and in that folder, initiate the cmd
+
+3. to create a react app using vite, run the following commands
+//
+npm create vite@4.1.0
+//
+Note: is will ask you some questions which you will need to answer
+
+4. to run your react project, 
+(a). change to the project directory by running the following commands
+//
+cd 'react-project'
+//
+Note: assuming 'react-project' is the name of the project
+
+(b). install the dependencies by running;
+//
+npm install
+//
+
+(c). start up the server by running;
+//
+npm run dev
+//
+
+5. to stop server from running, type 'ctrl C'
+
+6. Once a react app is created, the two most important files in the 'src' folder are 'App.jsx' and 'main.jsx'. the 'main.jsx' content should be left unaltered while the 'App.jsx' should be modified to reflect only below;
+//
+import { useState } from 'react'
+
+function App() {
+
+  return (
+    <div className="App"></div>
+  )
+}
+
+export default App
+//
+
+7. (a). Components are independent and reusable bits of code. They serve the same purpose as JavaScript functions, but work in isolation and return HTML. They are created by creating a file that ends with extension '.jsx'.
+(b). Every component must start with a capital letter and the function inside the component must be the same name with the component.
+(c). There are two types of Components, Structural and Functional Component. Structural Components are used to provide structure to the App, while Functional Components are used to provide functionality to the app.
+
+8. Inorder to create a component in react app, create a subfolder called 'components' in 'src' folder and create a file manually adding the extension '.jsx'. for example, 'Search.jsx'.
+
+9. In order to use a component;
+(a). export the component, from inside the component file ('.jsx' file).
+//
+export default function Search(){
+    return(<div></div>);
+}
+//
+
+(b). import the component in the 'App.jsx' file;
+//
+import Hello from './components/Search'
+//
+
+(c). reference the component wherever you need it to be by using a self enclosing tag with name of the component
+//
+<Search/>
+//
+
+10. Jsx is a file format that allows HTML to be written alongside JS.
+
+11. In creating JSX, you must only return one root elements (i.e one HTML tag element). Every other element should be wrapped in that root element.
+
+12. Props are properties passed to components to make them dynamic. props are immutable (unchanging);
+(a). example of props in components
+//
+function Hello(props){
+    return( 
+        <div>
+            <h6>{props.message} {name} {props.surname}</h6>
+            <h6>The addition of two numbers is {addVariables()}</h6>
+        </div>
+    );
+}
+//
+
+(b). example use of props in app
+//
+<Hello surname='john' message='welcome'/>
+//
+
+13. Destructuring of props means coverting of props to variables in javascript. Example below;
+//
+function Hello(props){
+
+    //destructing of props
+    const {surname, message} = props;
+
+    return( 
+        <div>
+            <h6>{message} {name} {surname}</h6>
+            <h6>The addition of two numbers is {addVariables()}</h6>
+        </div>
+    );
+}
+
+// another way to destructure props
+function Hello({surname, message}){
+    return( 
+        <div>
+            <h6>{message} {name} {surname}</h6>
+            <h6>The addition of two numbers is {addVariables()}</h6>
+        </div>
+    );
+}
+//
+
+14. Element variables are variables that allow you store HTML elements within them
+
+15. State is an object that holds information to control behaviour of a componenet
+//
+const [count, setCount] = useState(0); /*state variable set as integer, and set a default value*/
+const [query, setQuery] = useState(""); /*state variable set as string, and leave it empty*/
+const [query, setQuery] = useState([]); /*state variable set as an array, and leave it empty*/
+//
+Where count is the name of the variable and setCount is the function to set the variable
+
+16. Difference between state and props
+(a). Props are passed to the component, state are contained inside the component 
+(b). Props are immutable (unchanging), state can be changed
+(c). Props are like parameters passed to a function, state is like a variable declared in function body
+
+17. To automatically set the value of an 'HTML input' field using a "state variable", you set the 'value' to the value of the state variable and use the 'onChange' function in JavaScript to use the "state function" to change the variable once it changes. Example below
+//
+<input type="text" placeholder="Search" value={query} onChange={(e) => setQuery(e.target.value)} />
+//
+
+18. Hooks are functions that should only be called in react component. useEffect Hook, enables the sync of component with an external system.
+
+19.(a). Syntax of the useEffect Hook is; 
+//
+ useEffect(() => {}, []); /*pass a callback function ()=>{} and dependency array []*/
+//
+NOTE: the "callback function" is used to determine what runs in the useEffect hook while the item passed in the "dependancy array" is used to determine when the useEffect hook runs. Only when that item experiences a change will the useEffect run
+
+(b). Example of the useEffect Hook is;
+//
+useEffect(() => {
+
+    //definition of function
+    async function fetchFood(){
+        const res = await fetch(`${URL}?query=${query}&apiKey=${apiKey}`);
+        const data = await res.json();
+        console.log(data.results);
+
+        setFoodData(data.results);
+    }
+
+    //calling of the function
+    fetchFood();
+
+}, [query]);
+//
+
+(c). To call an API in the useEffect Hook;
+-> use the "fetch()" method to call API. //const res = fetch(`${URL}?query=${query}&apiKey=${apiKey}`);//
+-> get the result and convert to json object using ".json()" method. //const data = res.json();//
+-> 'data' is the result of the call and can be viewed in console. 
+
+20. To use .env in "vite-react" app,
+(a). create an ".env" in the root of the application
+(b). create the variable in the ".env" file with prefix as "VITE_". example is //VITE_SPN_ACCESS_KEY//.
+(c). Reference the variable in any component as //import.meta.env.VITE_SPN_ACCESS_KEY//
+(d). Add ".env" to ".gitignore".
+
+21. To create styling for a component, which is specific for it;
+(a). Create a file name after the component, but with a different extension e.g. component = Nav.jsx, style file = nav.module.css
+(b). import the style file into the component via the command //import styles from "./nav.module.css"//, assuming style file and component file are in the same folder
+(c). The classes referenced in the style file are placed in the component file like below;
+//
+import styles from "./nav.module.css"
+
+export default function Nav(){
+
+    return(
+        <div className={styles.nav}>🍔FoodApp</div>
+    )
+}
+//
+
+22. When one component is referenced within another, its important to pass the one inside as a child prop to the one outside, or the one acting as a house. This act is referred to as nesting of components. Example;
+//
+/* structure */
+<Container>
+    <FoodList foodData={foodData} />
+</Container>
+
+/* referencing */
+export default function Container({ children }){
+    return(
+        <div>{children}</div>
+    )
+}
+//
+
+
+
+
+
+
+
+
+
+16. Multiple pages (components could serve as pages) in react, 
+(a). install a component called React Router by running the command below;
+//
+npm install react-router-dom
+//
+
+(b). to ensure it works, place the following codes in 'main.jsx'
+//
+/*to import router dom*/
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+//
+
+//
+/*to create route to different pages, always import components before use*/
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+  },
+  {
+    path: "/blog",
+    element: <Blog/>,
+  },
+]);
+//
+
+//
+/*reference routes in main application*/
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+//
+
+(c). to link pages in the application use the below code;
+//
+<li><link to="/">Home</link></li>
+<li><link to="/blog">Blog</link></li>
+//
+
+(d). for new pages, create a folder for pages
+
+17. to use boostrap in react application
+(a). install it in the react application
+//
+npm install react-bootstrap bootstrap
+//
+
+(b). include the following line of code in the 'App.jsx'
+//
+import 'bootstrap/dist/css/bootstrap.min.css';
+//
+
+(c). include the code below in the 'index.html'
+//
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+  crossorigin="anonymous"
+/>
+//
+
+(d). to use it in a react component
+//
+import Badge from 'react-bootstrap/Badge';
+
+function BasicExample() {
+  return (
+    <div>
+      <h1>
+        Example heading <Badge bg="secondary">New</Badge>
+      </h1>
+    </div>
+  );
+}
+
+export default BasicExample;
+//
