@@ -202,6 +202,21 @@ export default function Container({ children }){
 }
 //
 
+23. The map function is used to loop through objects in a list or array in react. its used as follows below;
+//
+/* Where 'foodData' is the array structure to be looped through */
+export default function FoodList({foodData, setFoodId}){
+
+    return(
+        <div>
+            {foodData.map((food)=>(
+                <FoodItem key={food.id} food={food} setFoodId={setFoodId}/>
+            ))}
+        </div>
+    )
+
+}
+//
 
 
 
